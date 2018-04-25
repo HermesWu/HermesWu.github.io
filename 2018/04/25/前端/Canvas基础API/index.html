@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.1.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Canvas," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="canvasCanvas MDN文档： https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API Canvas 的默认大小为300像素×150像素（宽×高，像素的单位是px）。但是，可以使用HTML的高度和宽度属性来自定义Canvas 的尺寸。为了在 Canvas 上绘制图形，我们使用一个JavaScript上下文对象，它能动态创建图像">
+<meta name="keywords" content="Canvas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Canvas基础API">
+<meta property="og:url" content="http://yoursite.com/2018/04/25/前端/Canvas基础API/index.html">
+<meta property="og:site_name" content="Secret Superstar">
+<meta property="og:description" content="canvasCanvas MDN文档： https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API Canvas 的默认大小为300像素×150像素（宽×高，像素的单位是px）。但是，可以使用HTML的高度和宽度属性来自定义Canvas 的尺寸。为了在 Canvas 上绘制图形，我们使用一个JavaScript上下文对象，它能动态创建图像">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-25T03:36:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Canvas基础API">
+<meta name="twitter:description" content="canvasCanvas MDN文档： https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API Canvas 的默认大小为300像素×150像素（宽×高，像素的单位是px）。但是，可以使用HTML的高度和宽度属性来自定义Canvas 的尺寸。为了在 Canvas 上绘制图形，我们使用一个JavaScript上下文对象，它能动态创建图像">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/25/前端/Canvas基础API/"/>
+
+
+
+
+
+  <title>Canvas基础API | Secret Superstar</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100475240-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Secret Superstar</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">天生我材必有用，千金散尽还复来</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="/resume/" rel="section">
+            
+            Resume
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-timelines">
+          <a href="/archives/" rel="section">
+            
+            Timelines
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/前端/Canvas基础API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hermes Wu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my_avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Secret Superstar">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Canvas基础API</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-25T11:27:22+08:00">
+                2018-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/25/前端/Canvas基础API/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/04/25/前端/Canvas基础API/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="canvas"><a href="#canvas" class="headerlink" title="canvas"></a>canvas</h1><p>Canvas MDN文档： <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API</a></p>
+<p>Canvas 的默认大小为300像素×150像素（宽×高，像素的单位是px）。但是，可以使用HTML的高度和宽度属性来自定义Canvas 的尺寸。为了在 Canvas 上绘制图形，我们使用一个JavaScript上下文对象，它能动态创建图像（ creates graphics on the fly）。</p>
+<p><code>&lt;canvas id=&quot;tutorial&quot; width=&quot;150&quot; height=&quot;150&quot;&gt;&lt;/canvas&gt;</code></p>
+<p><canvas> 看起来和 <img> 元素很相像，唯一的不同就是它并没有 src 和 alt 属性。实际上，<canvas> 标签只有两个属性—— width和height。这些都是可选的，并且同样利用 DOM properties 来设置。当没有设置宽度和高度的时候，canvas会初始化宽度为300像素和高度为150像素。该元素可以使用CSS来定义大小，但在绘制时图像会伸缩以适应它的框架尺寸：如果CSS的尺寸与初始画布的比例不一致，它会出现扭曲。<br>注意: 如果你绘制出来的图像是扭曲的, 尝试用width和height属性为<canvas>明确规定宽高，而不是使用CSS。</canvas></canvas></canvas></p>
+<p>canvas起初是空白的。为了展示，首先脚本需要找到渲染上下文，然后在它的上面绘制。<canvas> 元素有一个叫做 getContext() 的方法，这个方法是用来获得渲染上下文和它的绘画功能。getContext()只有一个参数，上下文的格式。对于2D图像而言，如本教程，你可以使用 CanvasRenderingContext2D</canvas></p>
+<p>代码的第一行通过使用 document.getElementById() 方法来为 <canvas> 元素得到DOM对象。一旦有了元素对象，你可以通过使用它的getContext() 方法来访问绘画上下文</canvas></p>
+<h2 id="检查支持性"><a href="#检查支持性" class="headerlink" title="检查支持性"></a>检查支持性</h2><p>替换内容是用于在不支持 <canvas> 标签的浏览器中展示的。通过简单的测试getContext()方法的存在，脚本可以检查编程支持性。上面的代码片段现在变成了这个样子：</canvas></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var canvas = document.getElementById(&apos;tutorial&apos;);</span><br><span class="line"></span><br><span class="line">if (canvas.getContext)&#123;</span><br><span class="line">  var ctx = canvas.getContext(&apos;2d&apos;);</span><br><span class="line">  // drawing code here</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  // canvas-unsupported code here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="模板骨架"><a href="#模板骨架" class="headerlink" title="模板骨架"></a>模板骨架</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;Canvas tutorial&lt;/title&gt;</span><br><span class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">      function draw()&#123;</span><br><span class="line">        var canvas = document.getElementById(&apos;tutorial&apos;);</span><br><span class="line">        if (canvas.getContext)&#123;</span><br><span class="line">          var ctx = canvas.getContext(&apos;2d&apos;);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      canvas &#123; border: 1px solid black; &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body onload=&quot;draw();&quot;&gt;</span><br><span class="line">    &lt;canvas id=&quot;tutorial&quot; width=&quot;150&quot; height=&quot;150&quot;&gt;&lt;/canvas&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>上面的脚本中包含一个叫做draw()的函数，当页面加载结束的时候就会执行这个函数。通过使用在文档上加载事件来完成。只要页面加载结束，这个函数，或者像是这个的，同样可以使用 window.setTimeout()， window.setInterval()，或者其他任何事件处理程序来调用。</p>
+<h3 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line"> &lt;head&gt;</span><br><span class="line">  &lt;script type=&quot;application/javascript&quot;&gt;</span><br><span class="line">    function draw() &#123;</span><br><span class="line">      var canvas = document.getElementById(&quot;canvas&quot;);</span><br><span class="line">      if (canvas.getContext) &#123;</span><br><span class="line">        var ctx = canvas.getContext(&quot;2d&quot;);</span><br><span class="line"></span><br><span class="line">        ctx.fillStyle = &quot;rgb(200,0,0)&quot;;</span><br><span class="line">        ctx.fillRect (10, 10, 55, 50);</span><br><span class="line"></span><br><span class="line">        ctx.fillStyle = &quot;rgba(0, 0, 200, 0.5)&quot;;</span><br><span class="line">        ctx.fillRect (30, 30, 55, 50);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line"> &lt;/head&gt;</span><br><span class="line"> &lt;body onload=&quot;draw();&quot;&gt;</span><br><span class="line">   &lt;canvas id=&quot;canvas&quot; width=&quot;150&quot; height=&quot;150&quot;&gt;&lt;/canvas&gt;</span><br><span class="line"> &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="绘制图形"><a href="#绘制图形" class="headerlink" title="绘制图形"></a>绘制图形</h2><p>所以图中蓝色方形左上角的坐标为距离左边（X轴）x像素，距离上边（Y轴）y像素（坐标为（x,y））。</p>
+<h3 id="矩形"><a href="#矩形" class="headerlink" title="矩形"></a>矩形</h3><p>不同于SVG，HTML中的元素canvas只支持一种原生的图形绘制：矩形。所有其他的图形的绘制都至少需要生成一条路径。不过，我们拥有众多路径生成的方法让复杂图形的绘制成为了可能。</p>
+<p>首先，我们回到矩形的绘制中。canvas提供了三种方法绘制矩形：</p>
+<p><code>fillRect(x, y, width, height)</code><br>绘制一个填充的矩形</p>
+<p><code>strokeRect(x, y, width, height)</code><br>绘制一个矩形的边框</p>
+<p><code>clearRect(x, y, width, height)</code><br>清除指定矩形区域，让清除部分完全透明。</p>
+<p>上面提供的方法之中每一个都包含了相同的参数。x与y指定了在canvas画布上所绘制的矩形的左上角（相对于原点）的坐标。width和height设置矩形的尺寸。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function draw() &#123;</span><br><span class="line"> var canvas = document.getElementById(&apos;canvas&apos;);</span><br><span class="line"> if (canvas.getContext) &#123;</span><br><span class="line"> var ctx = canvas.getContext(&apos;2d&apos;);</span><br><span class="line"></span><br><span class="line"> ctx.fillRect(25,25,100,100);</span><br><span class="line"> ctx.clearRect(45,45,60,60);</span><br><span class="line"> ctx.strokeRect(50,50,50,50);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="绘制路径"><a href="#绘制路径" class="headerlink" title="绘制路径"></a>绘制路径</h2><p>图形的基本元素是路径。路径是通过不同颜色和宽度的线段或曲线相连形成的不同形状的点的集合。一个路径，甚至一个子路径，都是闭合的。使用路径绘制图形需要一些额外的步骤。</p>
+<ol>
+<li>首先，你需要创建路径起始点。</li>
+<li>然后你使用画图命令去画出路径。</li>
+<li>之后你把路径封闭。</li>
+<li>一旦路径生成，你就能通过描边或填充路径区域来渲染图形</li>
+</ol>
+<p><code>beginPath()</code><br>新建一条路径，生成之后，图形绘制命令被指向到路径上生成路径。</p>
+<p><code>closePath()</code><br>闭合路径之后图形绘制命令又重新指向到上下文中。</p>
+<p><code>stroke()</code><br>通过线条来绘制图形轮廓。</p>
+<p><code>fill()</code><br>通过填充路径的内容区域生成实心的图形。</p>
+<p>生成路径的第一步叫做beginPath()。本质上，路径是由很多子路径构成，这些子路径都是在一个列表中，所有的子路径（线、弧形、等等）构成图形。而每次这个方法调用之后，列表清空重置，然后我们就可以重新绘制新的图形。</p>
+<p>第二步就是调用函数指定绘制路径，本文稍后我们就能看到了。</p>
+<p>第三，就是闭合路径closePath(),不是必需的。这个方法会通过绘制一条从当前点到开始点的直线来闭合图形。如果图形是已经闭合了的，即当前点为开始点，该函数什么也不做。</p>
+<p>注意：当你调用fill()函数时，所有没有闭合的形状都会自动闭合，所以你不需要调用closePath()函数。但是调用stroke()时不会自动闭合。</p>
+<h3 id="绘制一个三角形"><a href="#绘制一个三角形" class="headerlink" title="绘制一个三角形"></a>绘制一个三角形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function draw() &#123;</span><br><span class="line"> var canvas = document.getElementById(&apos;canvas&apos;);</span><br><span class="line"> if (canvas.getContext)&#123;</span><br><span class="line"> var ctx = canvas.getContext(&apos;2d&apos;);</span><br><span class="line"></span><br><span class="line">    ctx.beginPath();</span><br><span class="line">    ctx.moveTo(75,50);</span><br><span class="line">    ctx.lineTo(100,75);</span><br><span class="line">    ctx.lineTo(100,25);</span><br><span class="line">    ctx.fill();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="移动笔触"><a href="#移动笔触" class="headerlink" title="移动笔触"></a>移动笔触</h2><p>一个非常有用的函数，而这个函数实际上并不能画出任何东西，也是上面所描述的路径列表的一部分，这个函数就是moveTo()。或者你可以想象一下在纸上作业，一支钢笔或者铅笔的笔尖从一个点到另一个点的移动过程。</p>
+<p><code>moveTo(x, y)</code><br>将笔触移动到指定的坐标x以及y上。</p>
+<p>当canvas初始化或者beginPath()调用后，你通常会使用moveTo()函数设置起点。我们也能够使用moveTo()绘制一些不连续的路径。看一下下面的笑脸例子。我将用到moveTo()方法（红线处）的地方标记了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function draw() &#123;</span><br><span class="line"> var canvas = document.getElementById(&apos;canvas&apos;);</span><br><span class="line"> if (canvas.getContext)&#123;</span><br><span class="line"> var ctx = canvas.getContext(&apos;2d&apos;);</span><br><span class="line"></span><br><span class="line">    ctx.beginPath();</span><br><span class="line">    ctx.arc(75,75,50,0,Math.PI*2,true); // 绘制</span><br><span class="line">    ctx.moveTo(110,75);</span><br><span class="line">    ctx.arc(75,75,35,0,Math.PI,false);   // 口(顺时针)</span><br><span class="line">    ctx.moveTo(65,65);</span><br><span class="line">    ctx.arc(60,65,5,0,Math.PI*2,true);  // 左眼</span><br><span class="line">    ctx.moveTo(95,65);</span><br><span class="line">    ctx.arc(90,65,5,0,Math.PI*2,true);  // 右眼</span><br><span class="line">    ctx.stroke();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="绘制线"><a href="#绘制线" class="headerlink" title="绘制线"></a>绘制线</h2><p>绘制直线，需要用到的方法lineTo()。</p>
+<p><code>lineTo(x, y)</code><br>绘制一条从当前位置到指定x以及y位置的直线。</p>
+<p>该方法有两个参数：x以及y ，代表坐标系中直线结束的点。开始点和之前的绘制路径有关，之前路径的结束点就是接下来的开始点，等等。。。开始点也可以通过moveTo()函数改变。</p>
+<p>下面的例子绘制两个三角形，一个是填充的，另一个是描边的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function draw() &#123;</span><br><span class="line"> var canvas = document.getElementById(&apos;canvas&apos;);</span><br><span class="line"> if (canvas.getContext)&#123;</span><br><span class="line"> var ctx = canvas.getContext(&apos;2d&apos;);</span><br><span class="line"></span><br><span class="line"> // 填充三角形</span><br><span class="line"> ctx.beginPath();</span><br><span class="line"> ctx.moveTo(25,25);</span><br><span class="line"> ctx.lineTo(105,25);</span><br><span class="line"> ctx.lineTo(25,105);</span><br><span class="line"> ctx.fill();</span><br><span class="line"></span><br><span class="line"> // 描边三角形</span><br><span class="line"> ctx.beginPath();</span><br><span class="line"> ctx.moveTo(125,125);</span><br><span class="line"> ctx.lineTo(125,45);</span><br><span class="line"> ctx.lineTo(45,125);</span><br><span class="line"> ctx.closePath();</span><br><span class="line"> ctx.stroke();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你会注意到填充与描边三角形步骤有所不同。正如上面所提到的，因为路径使用填充（filled）时，路径自动闭合，使用描边（stroked）则不会闭合路径。如果没有添加闭合路径closePath()到描述三角形函数中，则只绘制了两条线段，并不是一个完整的三角形。</p>
+<h2 id="绘制圆弧"><a href="#绘制圆弧" class="headerlink" title="绘制圆弧"></a>绘制圆弧</h2><p>绘制圆弧或者圆，我们使用arc()方法。当然可以使用arcTo()，不过这个的实现并不是那么的可靠，所以我们这里不作介绍。</p>
+<p><code>arc(x, y, radius, startAngle, endAngle, anticlockwise)</code><br>画一个以（x,y）为圆心的以radius为半径的圆弧（圆），从startAngle开始到endAngle结束，按照anticlockwise给定的方向（默认为顺时针）来生成。</p>
+<p><code>arcTo(x1, y1, x2, y2, radius)</code><br>根据给定的控制点和半径画一段圆弧，再以直线连接两个控制点。</p>
+<p>这里详细介绍一下arc方法，该方法有六个参数：x,y为绘制圆弧所在圆上的圆心坐标。radius为半径。startAngle以及endAngle参数用弧度定义了开始以及结束的弧度。这些都是以x轴为基准。参数anticlockwise为一个布尔值。为true时，是逆时针方向，否则顺时针方向。</p>
+<p>注意：arc()函数中的角度单位是弧度，不是度数。角度与弧度的js表达式:radians=(Math.PI/180)*degrees。</p>
+<p>下面的例子比上面的要复杂一下，下面绘制了12个不同的角度以及填充的圆弧。</p>
+<p>下面两个for循环，生成圆弧的行列（x,y）坐标。每一段圆弧的开始都调用beginPath()。代码中，每个圆弧的参数都是可变的，实际生活中，我们并不需要这样做。</p>
+<p>x,y坐标是可变的。半径（radius）和开始角度（startAngle）都是固定的。结束角度（endAngle）在第一列开始时是180度（半圆）然后每列增加90度。最后一列形成一个完整的圆。</p>
+<p>clockwise语句作用于第一、三行是顺时针的圆弧，anticlockwise作用于二、四行为逆时针圆弧。if语句让一、二行描边圆弧，下面两行填充路径。</p>
+<p>注意: 这个示例所需的画布大小略大于本页面的其他例子: 150 x 200 像素。</p>
+<h2 id="二次贝塞尔曲线及三次贝塞尔曲线"><a href="#二次贝塞尔曲线及三次贝塞尔曲线" class="headerlink" title="二次贝塞尔曲线及三次贝塞尔曲线"></a>二次贝塞尔曲线及三次贝塞尔曲线</h2><p>下一个十分有用的路径类型就是贝塞尔曲线。二次及三次贝塞尔曲线都十分有用，一般用来绘制复杂有规律的图形。</p>
+<p><code>quadraticCurveTo(cp1x, cp1y, x, y)</code><br>绘制二次贝塞尔曲线，cp1x,cp1y为一个控制点，x,y为结束点。</p>
+<p><code>bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)</code><br>绘制三次贝塞尔曲线，cp1x,cp1y为控制点一，cp2x,cp2y为控制点二，x,y为结束点。</p>
+<p>右边的图能够很好的描述两者的关系，二次贝塞尔曲线有一个开始点（蓝色）、一个结束点（蓝色）以及一个控制点（红色），而三次贝塞尔曲线有两个控制点</p>
+<p>参数x、y在这两个方法中都是结束点坐标。cp1x,cp1y为坐标中的第一个控制点，cp2x,cp2y为坐标中的第二个控制点。</p>
+<h3 id="二次贝塞尔曲线"><a href="#二次贝塞尔曲线" class="headerlink" title="二次贝塞尔曲线"></a>二次贝塞尔曲线</h3><p>这个例子使用多个贝塞尔曲线来渲染对话气泡。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function draw() &#123;</span><br><span class="line"> var canvas = document.getElementById(&apos;canvas&apos;);</span><br><span class="line"> if (canvas.getContext) &#123;</span><br><span class="line"> var ctx = canvas.getContext(&apos;2d&apos;);</span><br><span class="line"></span><br><span class="line"> // 二次贝塞尔曲线</span><br><span class="line"> ctx.beginPath();</span><br><span class="line"> ctx.moveTo(75,25);</span><br><span class="line"> ctx.quadraticCurveTo(25,25,25,62.5);</span><br><span class="line"> ctx.quadraticCurveTo(25,100,50,100);</span><br><span class="line"> ctx.quadraticCurveTo(50,120,30,125);</span><br><span class="line"> ctx.quadraticCurveTo(60,120,65,100);</span><br><span class="line"> ctx.quadraticCurveTo(125,100,125,62.5);</span><br><span class="line"> ctx.quadraticCurveTo(125,25,75,25);</span><br><span class="line"> ctx.stroke();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="三次贝赛尔曲线"><a href="#三次贝赛尔曲线" class="headerlink" title="三次贝赛尔曲线"></a>三次贝赛尔曲线</h3><p>这个例子使用贝塞尔曲线绘制心形。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function draw() &#123;</span><br><span class="line"> var canvas = document.getElementById(&apos;canvas&apos;);</span><br><span class="line"> if (canvas.getContext)&#123;</span><br><span class="line"> var ctx = canvas.getContext(&apos;2d&apos;);</span><br><span class="line"></span><br><span class="line"> //三次贝塞尔曲线</span><br><span class="line"> ctx.beginPath();</span><br><span class="line"> ctx.moveTo(75,40);</span><br><span class="line"> ctx.bezierCurveTo(75,37,70,25,50,25);</span><br><span class="line"> ctx.bezierCurveTo(20,25,20,62.5,20,62.5);</span><br><span class="line"> ctx.bezierCurveTo(20,80,40,102,75,120);</span><br><span class="line"> ctx.bezierCurveTo(110,102,130,80,130,62.5);</span><br><span class="line"> ctx.bezierCurveTo(130,62.5,130,25,100,25);</span><br><span class="line"> ctx.bezierCurveTo(85,25,75,37,75,40);</span><br><span class="line"> ctx.fill();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="矩形-1"><a href="#矩形-1" class="headerlink" title="矩形"></a>矩形</h2><p>直接在画布上绘制矩形的三个额外方法，正如我们开始所见的Drawing rectangles，同样，也有rect()方法，将一个矩形路径增加到当前路径上。</p>
+<p><code>rect(x, y, width, height)</code><br>绘制一个左上角坐标为（x,y），宽高为width以及height的矩形。<br>当该方法执行的时候，moveTo()方法自动设置坐标参数（0,0）。也就是说，当前笔触自动重置回默认坐标</p>
+<h2 id="组合使用"><a href="#组合使用" class="headerlink" title="组合使用"></a>组合使用</h2><p>目前为止，每一个例子中的每个图形都只用到一种类型的路径。然而，绘制一个图形并没有限制使用数量以及类型。所以在最后的一个例子里，让我们组合使用所有的路径函数来重现一组著名的游戏人物。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">function draw() &#123;</span><br><span class="line"> var canvas = document.getElementById(&apos;canvas&apos;);</span><br><span class="line"> if (canvas.getContext)&#123;</span><br><span class="line"> var ctx = canvas.getContext(&apos;2d&apos;);</span><br><span class="line"></span><br><span class="line"> roundedRect(ctx,12,12,150,150,15);</span><br><span class="line"> roundedRect(ctx,19,19,150,150,9);</span><br><span class="line"> roundedRect(ctx,53,53,49,33,10);</span><br><span class="line"> roundedRect(ctx,53,119,49,16,6);</span><br><span class="line"> roundedRect(ctx,135,53,49,33,10);</span><br><span class="line"> roundedRect(ctx,135,119,25,49,10);</span><br><span class="line"></span><br><span class="line"> ctx.beginPath();</span><br><span class="line"> ctx.arc(37,37,13,Math.PI/7,-Math.PI/7,false);</span><br><span class="line"> ctx.lineTo(31,37);</span><br><span class="line"> ctx.fill();</span><br><span class="line"></span><br><span class="line"> for(var i=0;i&lt;8;i++)&#123;</span><br><span class="line"> ctx.fillRect(51+i*16,35,4,4);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> for(i=0;i&lt;6;i++)&#123;</span><br><span class="line"> ctx.fillRect(115,51+i*16,4,4);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> for(i=0;i&lt;8;i++)&#123;</span><br><span class="line"> ctx.fillRect(51+i*16,99,4,4);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> ctx.beginPath();</span><br><span class="line"> ctx.moveTo(83,116);</span><br><span class="line"> ctx.lineTo(83,102);</span><br><span class="line"> ctx.bezierCurveTo(83,94,89,88,97,88);</span><br><span class="line"> ctx.bezierCurveTo(105,88,111,94,111,102);</span><br><span class="line"> ctx.lineTo(111,116);</span><br><span class="line"> ctx.lineTo(106.333,111.333);</span><br><span class="line"> ctx.lineTo(101.666,116);</span><br><span class="line"> ctx.lineTo(97,111.333);</span><br><span class="line"> ctx.lineTo(92.333,116);</span><br><span class="line"> ctx.lineTo(87.666,111.333);</span><br><span class="line"> ctx.lineTo(83,116);</span><br><span class="line"> ctx.fill();</span><br><span class="line"></span><br><span class="line"> ctx.fillStyle = &quot;white&quot;;</span><br><span class="line"> ctx.beginPath();</span><br><span class="line"> ctx.moveTo(91,96);</span><br><span class="line"> ctx.bezierCurveTo(88,96,87,99,87,101);</span><br><span class="line"> ctx.bezierCurveTo(87,103,88,106,91,106);</span><br><span class="line"> ctx.bezierCurveTo(94,106,95,103,95,101);</span><br><span class="line"> ctx.bezierCurveTo(95,99,94,96,91,96);</span><br><span class="line"> ctx.moveTo(103,96);</span><br><span class="line"> ctx.bezierCurveTo(100,96,99,99,99,101);</span><br><span class="line"> ctx.bezierCurveTo(99,103,100,106,103,106);</span><br><span class="line"> ctx.bezierCurveTo(106,106,107,103,107,101);</span><br><span class="line"> ctx.bezierCurveTo(107,99,106,96,103,96);</span><br><span class="line"> ctx.fill();</span><br><span class="line"></span><br><span class="line"> ctx.fillStyle = &quot;black&quot;;</span><br><span class="line"> ctx.beginPath();</span><br><span class="line"> ctx.arc(101,102,2,0,Math.PI*2,true);</span><br><span class="line"> ctx.fill();</span><br><span class="line"></span><br><span class="line"> ctx.beginPath();</span><br><span class="line"> ctx.arc(89,102,2,0,Math.PI*2,true);</span><br><span class="line"> ctx.fill();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 封装的一个用于绘制圆角矩形的函数.</span><br><span class="line"></span><br><span class="line">function roundedRect(ctx,x,y,width,height,radius)&#123;</span><br><span class="line">  ctx.beginPath();</span><br><span class="line">  ctx.moveTo(x,y+radius);</span><br><span class="line">  ctx.lineTo(x,y+height-radius);</span><br><span class="line">  ctx.quadraticCurveTo(x,y+height,x+radius,y+height);</span><br><span class="line">  ctx.lineTo(x+width-radius,y+height);</span><br><span class="line">  ctx.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);</span><br><span class="line">  ctx.lineTo(x+width,y+radius);</span><br><span class="line">  ctx.quadraticCurveTo(x+width,y,x+width-radius,y);</span><br><span class="line">  ctx.lineTo(x+radius,y);</span><br><span class="line">  ctx.quadraticCurveTo(x,y,x,y+radius);</span><br><span class="line">  ctx.stroke();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们不会很详细地讲解上面的代码，因为事实上这很容易理解。重要的一点是绘制上下文中使用到了fillStyle属性，以及封装函数（例子中的roundedRect()）。使用封装函数对于减少代码量以及复杂度十分有用。</p>
+<p>在稍后的课程里，我们会回头再看看fillStyle样式的更多细节。这章节中，我们所做的关于fillStyle样式仅是改变填充颜色，由默认的黑色到白色，然后又是黑色。</p>
+<h2 id="Path2D"><a href="#Path2D" class="headerlink" title="Path2D"></a>Path2D</h2><p>正如我们在前面例子中看到的，你可以使用一系列的路径和绘画命令来把对象“画”在画布上。为了简化代码和提高性能，Path2D对象已可以在较新版本的浏览器中使用，用来缓存或记录绘画命令，这样你将能快速地回顾路径。</p>
+<p>Path2D()<br>Path2D()会返回一个新初始化的Path2D对象（可能将某一个路径作为变量——创建一个它的副本，或者将一个包含SVG path数据的字符串作为变量）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">new Path2D();     // 空的Path对象</span><br><span class="line">new Path2D(path); // 克隆Path对象</span><br><span class="line">new Path2D(d);    // 从SVG建立Path对象</span><br></pre></td></tr></table></figure>
+<p>所有的路径方法比如moveTo, rect, arc或quadraticCurveTo等，如我们前面见过的，都可以在Path2D中使用。</p>
+<p>Path2D API 添加了 addPath作为将path结合起来的方法。当你想要从几个元素中来创建对象时，这将会很实用。比如：</p>
+<p>Path2D.addPath(path [, transform])​<br>添加了一条路径到当前路径（可能添加了一个变换矩阵）。</p>
+<h2 id="Path2D示例"><a href="#Path2D示例" class="headerlink" title="Path2D示例"></a>Path2D示例</h2><p>在这个例子中，我们创造了一个矩形和一个圆。它们都被存为Path2D对象，后面再派上用场。随着新的Path2D API产生，几种方法也相应地被更新来使用Path2D对象而不是当前路径。在这里，带路径参数的stroke和fill可以把对象画在画布上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function draw() &#123;</span><br><span class="line">  var canvas = document.getElementById(&apos;canvas&apos;);</span><br><span class="line">  if (canvas.getContext)&#123;</span><br><span class="line">    var ctx = canvas.getContext(&apos;2d&apos;);</span><br><span class="line"></span><br><span class="line">    var rectangle = new Path2D();</span><br><span class="line">    rectangle.rect(10, 10, 50, 50);</span><br><span class="line"></span><br><span class="line">    var circle = new Path2D();</span><br><span class="line">    circle.moveTo(125, 35);</span><br><span class="line">    circle.arc(100, 35, 25, 0, 2 * Math.PI);</span><br><span class="line"></span><br><span class="line">    ctx.stroke(rectangle);</span><br><span class="line">    ctx.fill(circle);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var canvas = document.getElementById(&apos;canvas&apos;)</span><br><span class="line">var ctx = canvas.getContext(&apos;2d&apos;)</span><br><span class="line">ctx.fillStyle = &apos;green&apos;</span><br><span class="line">ctx.fillRect(10, 10, 100, 100)</span><br><span class="line">ctx.fillRect(0, 0, canvas.width, canvas.height)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hermes Wu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2018/04/25/前端/Canvas基础API/" title="Canvas基础API">http://yoursite.com/2018/04/25/前端/Canvas基础API/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="" rel="external nofollow" target="_blank"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a></a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Canvas/" rel="tag"># Canvas</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/25/编程基础/算法/" rel="next" title="算法-简单了解一下">
+                <i class="fa fa-chevron-left"></i> 算法-简单了解一下
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/25/前端/JS里的类型/" rel="prev" title="JS里的类型">
+                JS里的类型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my_avatar.jpeg"
+                alt="Hermes Wu" />
+            
+              <p class="site-author-name" itemprop="name">Hermes Wu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/HermesWu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1136025519@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/qing-tian-zhu-de-lan/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/p/1005055173077908/home?from=page_100505&mod=TAB&is_all=1#place" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#canvas"><span class="nav-number">1.</span> <span class="nav-text">canvas</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查支持性"><span class="nav-number">1.1.</span> <span class="nav-text">检查支持性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板骨架"><span class="nav-number">1.2.</span> <span class="nav-text">模板骨架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单的例子"><span class="nav-number">1.2.1.</span> <span class="nav-text">一个简单的例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制图形"><span class="nav-number">1.3.</span> <span class="nav-text">绘制图形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#矩形"><span class="nav-number">1.3.1.</span> <span class="nav-text">矩形</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制路径"><span class="nav-number">1.4.</span> <span class="nav-text">绘制路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制一个三角形"><span class="nav-number">1.4.1.</span> <span class="nav-text">绘制一个三角形</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移动笔触"><span class="nav-number">1.5.</span> <span class="nav-text">移动笔触</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制线"><span class="nav-number">1.6.</span> <span class="nav-text">绘制线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制圆弧"><span class="nav-number">1.7.</span> <span class="nav-text">绘制圆弧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二次贝塞尔曲线及三次贝塞尔曲线"><span class="nav-number">1.8.</span> <span class="nav-text">二次贝塞尔曲线及三次贝塞尔曲线</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二次贝塞尔曲线"><span class="nav-number">1.8.1.</span> <span class="nav-text">二次贝塞尔曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三次贝赛尔曲线"><span class="nav-number">1.8.2.</span> <span class="nav-text">三次贝赛尔曲线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩形-1"><span class="nav-number">1.9.</span> <span class="nav-text">矩形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组合使用"><span class="nav-number">1.10.</span> <span class="nav-text">组合使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Path2D"><span class="nav-number">1.11.</span> <span class="nav-text">Path2D</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Path2D示例"><span class="nav-number">1.12.</span> <span class="nav-text">Path2D示例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-[object Object]"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hermes Wu</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://HermesWu.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/04/25/前端/Canvas基础API/';
+          this.page.identifier = '2018/04/25/前端/Canvas基础API/';
+          this.page.title = 'Canvas基础API';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://HermesWu.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

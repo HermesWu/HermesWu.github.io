@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.1.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据结构," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数据结构哈希（Hash） 计数排序中的桶排序（复杂度O（n+max）），比快排快 桶排序与计数排序的区别 基数排序与计数排序的区别  队列（Queue） 先进先出 可用数组实现 举例： 排队  栈（Stack） 先进后出 可用数组实现 举例： 盗梦空间  链表（Linked List） 数组无法直接删除中间的一项，链表可以 用哈希（JS里面用对象表示哈希）实现链表 head、node概念  树（t">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构-简单了解一下">
+<meta property="og:url" content="http://yoursite.com/2018/04/25/编程基础/数据结构/index.html">
+<meta property="og:site_name" content="Secret Superstar">
+<meta property="og:description" content="数据结构哈希（Hash） 计数排序中的桶排序（复杂度O（n+max）），比快排快 桶排序与计数排序的区别 基数排序与计数排序的区别  队列（Queue） 先进先出 可用数组实现 举例： 排队  栈（Stack） 先进后出 可用数组实现 举例： 盗梦空间  链表（Linked List） 数组无法直接删除中间的一项，链表可以 用哈希（JS里面用对象表示哈希）实现链表 head、node概念  树（t">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-25T03:33:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构-简单了解一下">
+<meta name="twitter:description" content="数据结构哈希（Hash） 计数排序中的桶排序（复杂度O（n+max）），比快排快 桶排序与计数排序的区别 基数排序与计数排序的区别  队列（Queue） 先进先出 可用数组实现 举例： 排队  栈（Stack） 先进后出 可用数组实现 举例： 盗梦空间  链表（Linked List） 数组无法直接删除中间的一项，链表可以 用哈希（JS里面用对象表示哈希）实现链表 head、node概念  树（t">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/25/编程基础/数据结构/"/>
+
+
+
+
+
+  <title>数据结构-简单了解一下 | Secret Superstar</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100475240-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Secret Superstar</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">天生我材必有用，千金散尽还复来</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="/resume/" rel="section">
+            
+            Resume
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-timelines">
+          <a href="/archives/" rel="section">
+            
+            Timelines
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/编程基础/数据结构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hermes Wu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my_avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Secret Superstar">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">数据结构-简单了解一下</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-25T11:26:36+08:00">
+                2018-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程基础/" itemprop="url" rel="index">
+                    <span itemprop="name">编程基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/25/编程基础/数据结构/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/04/25/编程基础/数据结构/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><h2 id="哈希（Hash）"><a href="#哈希（Hash）" class="headerlink" title="哈希（Hash）"></a>哈希（Hash）</h2><ol>
+<li>计数排序中的桶排序（复杂度O（n+max）），比快排快</li>
+<li>桶排序与计数排序的区别</li>
+<li>基数排序与计数排序的区别</li>
+</ol>
+<h2 id="队列（Queue）"><a href="#队列（Queue）" class="headerlink" title="队列（Queue）"></a>队列（Queue）</h2><ul>
+<li>先进先出</li>
+<li>可用数组实现</li>
+<li>举例： 排队</li>
+</ul>
+<h2 id="栈（Stack）"><a href="#栈（Stack）" class="headerlink" title="栈（Stack）"></a>栈（Stack）</h2><ul>
+<li>先进后出</li>
+<li>可用数组实现</li>
+<li>举例： 盗梦空间</li>
+</ul>
+<h2 id="链表（Linked-List）"><a href="#链表（Linked-List）" class="headerlink" title="链表（Linked List）"></a>链表（Linked List）</h2><ul>
+<li>数组无法直接删除中间的一项，链表可以</li>
+<li>用哈希（JS里面用对象表示哈希）实现链表</li>
+<li>head、node概念</li>
+</ul>
+<h2 id="树（tree）"><a href="#树（tree）" class="headerlink" title="树（tree）"></a>树（tree）</h2><ul>
+<li>举例：层级结构、DOM</li>
+<li>概念： 层数、深度、节点个数</li>
+<li>二叉树</li>
+<li>满二叉树</li>
+<li>完全二叉树</li>
+<li>完全二叉树和满二叉树可以用数组实现</li>
+<li>其他树可以用哈希（对象）实现</li>
+<li>操作： 增删改查</li>
+<li>堆排序用到了tree</li>
+<li>其他： B树、红黑数、AVL树</li>
+</ul>
+<p>堆排序可视化: <a href="https://www.cs.usfca.edu/~galles/visualization/HeapSort.html" target="_blank" rel="noopener">https://www.cs.usfca.edu/~galles/visualization/HeapSort.html</a><br>堆排序JS代码完整讲解： <a href="http://bubkoo.com/2014/01/14/sort-algorithm/heap-sort/" target="_blank" rel="noopener">http://bubkoo.com/2014/01/14/sort-algorithm/heap-sort/</a></p>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><p>二叉树是每个节点最多有两个子树的树结构。通常子树被称作“左子树”（left subtree）和“右子树”（right subtree）。二叉树常被用于实现二叉查找树和二叉堆。</p>
+<p>二叉树的每个结点至多只有二棵子树（不存在度大于 2 的结点），二叉树的子树有左右之分，次序不能颠倒。二叉树的第 i 层至多有 2^(i - 1) 个结点；深度为 k 的二叉树至多有 2^k - 1 个结点；对任何一棵二叉树 T，如果其终端结点数为 n0，度为 2 的结点数为 n2，则n0 = n2 + 1。</p>
+<p>树和二叉树的三个主要差别：</p>
+<ul>
+<li>树的结点个数至少为 1，而二叉树的结点个数可以为 0</li>
+<li>树中结点的最大度数没有限制，而二叉树结点的最大度数为 2</li>
+<li>树的结点无左、右之分，而二叉树的结点有左、右之分</li>
+</ul>
+<p>二叉树又分为完全二叉树（complete binary tree）和满二叉树（full binary tree）</p>
+<p>满二叉树：一棵深度为 k，且有 2k - 1 个节点称之为满二叉树</p>
+<p>完全二叉树：深度为 k，有 n 个节点的二叉树，当且仅当其每一个节点都与深度为 k 的满二叉树中序号为 1 至 n 的节点对应时，称之为完全二叉树</p>
+<h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p>堆（二叉堆）可以视为一棵完全的二叉树，完全二叉树的一个“优秀”的性质是，除了最底层之外，每一层都是满的，这使得堆可以利用数组来表示（普通的一般的二叉树通常用链表作为基本容器表示），每一个结点对应数组中的一个元素。</p>
+<p>对于给定的某个结点的下标 i，可以很容易的计算出这个结点的父结点、孩子结点的下标：</p>
+<ul>
+<li>Parent(i) = floor(i/2)，i 的父节点下标</li>
+<li>Left(i) = 2i，i 的左子节点下标</li>
+<li>Right(i) = 2i + 1，i 的右子节点下标</li>
+</ul>
+<p>二叉堆一般分为两种：最大堆和最小堆。</p>
+<p>最大堆：</p>
+<ul>
+<li>最大堆中的最大元素值出现在根结点（堆顶）</li>
+<li>堆中每个父节点的元素值都大于等于其孩子结点（如果存在）</li>
+</ul>
+<p>最小堆：</p>
+<ul>
+<li>最小堆中的最小元素值出现在根结点（堆顶）</li>
+<li>堆中每个父节点的元素值都小于等于其孩子结点（如果存在）</li>
+</ul>
+<p>堆排序原理</p>
+<p>堆排序就是把最大堆堆顶的最大数取出，将剩余的堆继续调整为最大堆，再次将堆顶的最大数取出，这个过程持续到剩余数只有一个时结束。在堆中定义以下几种操作：</p>
+<ul>
+<li>最大堆调整（Max-Heapify）：将堆的末端子节点作调整，使得子节点永远小于父节点</li>
+<li>创建最大堆（Build-Max-Heap）：将堆所有数据重新排序，使其成为最大堆</li>
+<li>堆排序（Heap-Sort）：移除位在第一个数据的根节点，并做最大堆调整的递归运算</li>
+</ul>
+<p>继续进行下面的讨论前，需要注意的一个问题是：数组都是 Zero-Based，这就意味着我们的堆数据结构模型要发生改变</p>
+<p>相应的，几个计算公式也要作出相应调整：</p>
+<ul>
+<li>Parent(i) = floor((i-1)/2)，i 的父节点下标</li>
+<li>Left(i) = 2i + 1，i 的左子节点下标</li>
+<li>Right(i) = 2(i + 1)，i 的右子节点下标</li>
+</ul>
+<p>最大堆调整（MAX‐HEAPIFY）的作用是保持最大堆的性质，是创建最大堆的核心子程序，作用过程如图所示：</p>
+<p>由于一次调整后，堆仍然违反堆性质，所以需要递归的测试，使得整个堆都满足堆性质，用 JavaScript 可以表示如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 从 index 开始检查并保持最大堆性质</span><br><span class="line"> *</span><br><span class="line"> * @array</span><br><span class="line"> *</span><br><span class="line"> * @index 检查的起始下标</span><br><span class="line"> *</span><br><span class="line"> * @heapSize 堆大小</span><br><span class="line"> *</span><br><span class="line"> **/</span><br><span class="line">function maxHeapify(array, index, heapSize) &#123;</span><br><span class="line">  var iMax = index,</span><br><span class="line">      iLeft = 2 * index + 1,</span><br><span class="line">      iRight = 2 * (index + 1);</span><br><span class="line">  if (iLeft &lt; heapSize &amp;&amp; array[index] &lt; array[iLeft]) &#123;</span><br><span class="line">    iMax = iLeft;</span><br><span class="line">  &#125;</span><br><span class="line">  if (iRight &lt; heapSize &amp;&amp; array[iMax] &lt; array[iRight]) &#123;</span><br><span class="line">    iMax = iRight;</span><br><span class="line">  &#125;</span><br><span class="line">  if (iMax != index) &#123;</span><br><span class="line">    swap(array, iMax, index);</span><br><span class="line">    maxHeapify(array, iMax, heapSize); // 递归调整</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">function swap(array, i, j) &#123;</span><br><span class="line">  var temp = array[i];</span><br><span class="line">  array[i] = array[j];</span><br><span class="line">  array[j] = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通常来说，递归主要用在分治法中，而这里并不需要分治。而且递归调用需要压栈/清栈，和迭代相比，性能上有略微的劣势。当然，按照20/80法则，这是可以忽略的。但是如果你觉得用递归会让自己心里过不去的话，也可以用迭代，比如下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 从 index 开始检查并保持最大堆性质</span><br><span class="line"> *</span><br><span class="line"> * @array</span><br><span class="line"> *</span><br><span class="line"> * @index 检查的起始下标</span><br><span class="line"> *</span><br><span class="line"> * @heapSize 堆大小</span><br><span class="line"> *</span><br><span class="line"> **/</span><br><span class="line">function maxHeapify(array, index, heapSize) &#123;</span><br><span class="line">  var iMax, iLeft, iRight;</span><br><span class="line">  while (true) &#123;</span><br><span class="line">    iMax = index;</span><br><span class="line">    iLeft = 2 * index + 1;</span><br><span class="line">    iRight = 2 * (index + 1);</span><br><span class="line">    if (iLeft &lt; heapSize &amp;&amp; array[index] &lt; array[iLeft]) &#123;</span><br><span class="line">      iMax = iLeft;</span><br><span class="line">    &#125;</span><br><span class="line">    if (iRight &lt; heapSize &amp;&amp; array[iMax] &lt; array[iRight]) &#123;</span><br><span class="line">      iMax = iRight;</span><br><span class="line">    &#125;</span><br><span class="line">    if (iMax != index) &#123;</span><br><span class="line">      swap(array, iMax, index);</span><br><span class="line">      index = iMax;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">function swap(array, i, j) &#123;</span><br><span class="line">  var temp = array[i];</span><br><span class="line">  array[i] = array[j];</span><br><span class="line">  array[j] = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建最大堆（Build-Max-Heap）的作用是将一个数组改造成一个最大堆，接受数组和堆大小两个参数，Build-Max-Heap 将自下而上的调用 Max-Heapify 来改造数组，建立最大堆。因为 Max-Heapify 能够保证下标 i 的结点之后结点都满足最大堆的性质，所以自下而上的调用 Max-Heapify 能够在改造过程中保持这一性质。如果最大堆的数量元素是 n，那么 Build-Max-Heap 从 Parent(n) 开始，往上依次调用 Max-Heapify。流程如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function buildMaxHeap(array, heapSize) &#123;</span><br><span class="line">  var i,</span><br><span class="line">      iParent = Math.floor((heapSize - 1) / 2);</span><br><span class="line">      </span><br><span class="line">  for (i = iParent; i &gt;= 0; i--) &#123;</span><br><span class="line">    maxHeapify(array, i, heapSize);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>堆排序（Heap-Sort）是堆排序的接口算法，Heap-Sort先调用Build-Max-Heap将数组改造为最大堆，然后将堆顶和堆底元素交换，之后将底部上升，最后重新调用Max-Heapify保持最大堆性质。由于堆顶元素必然是堆中最大的元素，所以一次操作之后，堆中存在的最大元素被分离出堆，重复n-1次之后，数组排列完毕。整个流程如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function heapSort(array, heapSize) &#123;</span><br><span class="line">  buildMaxHeap(array, heapSize);</span><br><span class="line">  for (int i = heapSize - 1; i &gt; 0; i--) &#123;</span><br><span class="line">    swap(array, 0, i);</span><br><span class="line">    maxHeapify(array, 0, i);</span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，把上面的整理为完整的 javascript 代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">function heapSort(array) &#123;</span><br><span class="line">  function swap(array, i, j) &#123;</span><br><span class="line">    var temp = array[i];</span><br><span class="line">    array[i] = array[j];</span><br><span class="line">    array[j] = temp;</span><br><span class="line">  &#125;</span><br><span class="line">  function maxHeapify(array, index, heapSize) &#123;</span><br><span class="line">    var iMax,</span><br><span class="line">      iLeft,</span><br><span class="line">      iRight;</span><br><span class="line">    while (true) &#123;</span><br><span class="line">      iMax = index;</span><br><span class="line">      iLeft = 2 * index + 1;</span><br><span class="line">      iRight = 2 * (index + 1);</span><br><span class="line">      if (iLeft &lt; heapSize &amp;&amp; array[index] &lt; array[iLeft]) &#123;</span><br><span class="line">        iMax = iLeft;</span><br><span class="line">      &#125;</span><br><span class="line">      if (iRight &lt; heapSize &amp;&amp; array[iMax] &lt; array[iRight]) &#123;</span><br><span class="line">        iMax = iRight;</span><br><span class="line">      &#125;</span><br><span class="line">      if (iMax != index) &#123;</span><br><span class="line">        swap(array, iMax, index);</span><br><span class="line">        index = iMax;</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        break;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  function buildMaxHeap(array) &#123;</span><br><span class="line">    var i,</span><br><span class="line">      iParent = Math.floor(array.length / 2) - 1;</span><br><span class="line">    for (i = iParent; i &gt;= 0; i--) &#123;</span><br><span class="line">      maxHeapify(array, i, array.length);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  function sort(array) &#123;</span><br><span class="line">    buildMaxHeap(array);</span><br><span class="line">    for (var i = array.length - 1; i &gt; 0; i--) &#123;</span><br><span class="line">      swap(array, 0, i);</span><br><span class="line">      maxHeapify(array, 0, i);</span><br><span class="line">    &#125;</span><br><span class="line">    return array;</span><br><span class="line">  &#125;</span><br><span class="line">  return sort(array);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Hermes Wu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2018/04/25/编程基础/数据结构/" title="数据结构-简单了解一下">http://yoursite.com/2018/04/25/编程基础/数据结构/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="" rel="external nofollow" target="_blank"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a></a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/25/编程基础/命令行/" rel="next" title="命令行基础">
+                <i class="fa fa-chevron-left"></i> 命令行基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/25/编程基础/算法/" rel="prev" title="算法-简单了解一下">
+                算法-简单了解一下 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my_avatar.jpeg"
+                alt="Hermes Wu" />
+            
+              <p class="site-author-name" itemprop="name">Hermes Wu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/HermesWu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1136025519@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/qing-tian-zhu-de-lan/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/p/1005055173077908/home?from=page_100505&mod=TAB&is_all=1#place" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据结构"><span class="nav-number">1.</span> <span class="nav-text">数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希（Hash）"><span class="nav-number">1.1.</span> <span class="nav-text">哈希（Hash）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#队列（Queue）"><span class="nav-number">1.2.</span> <span class="nav-text">队列（Queue）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈（Stack）"><span class="nav-number">1.3.</span> <span class="nav-text">栈（Stack）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链表（Linked-List）"><span class="nav-number">1.4.</span> <span class="nav-text">链表（Linked List）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树（tree）"><span class="nav-number">1.5.</span> <span class="nav-text">树（tree）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序"><span class="nav-number">1.6.</span> <span class="nav-text">堆排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树"><span class="nav-number">1.6.1.</span> <span class="nav-text">二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆"><span class="nav-number">1.6.2.</span> <span class="nav-text">堆</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-[object Object]"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hermes Wu</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://HermesWu.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/04/25/编程基础/数据结构/';
+          this.page.identifier = '2018/04/25/编程基础/数据结构/';
+          this.page.title = '数据结构-简单了解一下';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://HermesWu.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
