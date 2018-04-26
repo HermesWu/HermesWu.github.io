@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Hexo升级大法4]]></title>
-    <url>%2F2018%2F04%2F26%2Funcategorized%2FHexo%E5%8D%87%E7%BA%A7%E5%A4%A7%E6%B3%954%2F</url>
-    <content type="text"></content>
+    <title><![CDATA[Hexo升级大法(4)-添加结尾标题]]></title>
+    <url>%2F2018%2F04%2F26%2FHexo%2FHexo%E5%8D%87%E7%BA%A7%E5%A4%A7%E6%B3%954%2F</url>
+    <content type="text"><![CDATA[给文章后面添加结束标语原文链接：https://asdfv1929.github.io/2018/01/28/add-the-end/ 新建文件在\themes\next\layout\_macro中新建passage-end-tag.swig文件，添加代码至该文件中： 12345&lt;div&gt; &#123;% if not is_index %&#125; &lt;div style=&quot;text-align:center;color: #ccc;font-size:14px;&quot;&gt;-------------本文结束&lt;i class=&quot;fa fa-paw&quot;&gt;&lt;/i&gt;感谢您的阅读-------------&lt;/div&gt; &#123;% endif %&#125;&lt;/div&gt; 修改post.swig打开\themes\next\layout\_macro\post.swig文件，在post-body后，post-footer前，添加下面内容： 12345&lt;div&gt; &#123;% if not is_index %&#125; &#123;% include &apos;passage-end-tag.swig&apos; %&#125; &#123;% endif %&#125;&lt;/div&gt; 修改_config打开主题配置文件（_config.yml),在末尾添加： 123# 文章末尾添加“本文结束”标记passage_end_tag: enabled: true 齐活，自己发挥下，搞个有意思的结尾吧。]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Hexo升级大法(3)-给你的点击比个心]]></title>
