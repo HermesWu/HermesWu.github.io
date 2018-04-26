@@ -196,6 +196,8 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
             首页
           </a>
         </li>
@@ -203,6 +205,8 @@
         
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
             分类
           </a>
@@ -212,6 +216,8 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
             标签
           </a>
         </li>
@@ -219,6 +225,8 @@
         
         <li class="menu-item menu-item-timelines">
           <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
             Timelines
           </a>
@@ -230,6 +238,8 @@
           
             <a href="javascript:;" class="popup-trigger">
           
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             搜索
           </a>
@@ -314,14 +324,7 @@
           
 
   
-    <div class="comments" id="comments">
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
-    </div>
+ <div id="gitalk-container"></div>
 
   
 
@@ -598,26 +601,6 @@
 
   
 
-    
-      <script id="dsq-count-scr" src="https://HermesWu.disqus.com/count.js" async></script>
-    
-
-    
-      <script type="text/javascript">
-        var disqus_config = function () {
-          this.page.url = 'https://hermeswu.github.io/resume/index.html';
-          this.page.identifier = 'resume/index.html';
-          this.page.title = 'resume';
-        };
-        var d = document, s = d.createElement('script');
-        s.src = 'https://HermesWu.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', '' + +new Date());
-        (d.head || d.body).appendChild(s);
-      </script>
-    
-
-  
-
 
 
 
@@ -633,6 +616,7 @@
 
 
 
+  
 
 
 
@@ -641,6 +625,24 @@
 
 
 
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'b68f5a08677b6dbea8e1',
+          clientSecret: 'b67efb2977c783f757242f6e2cece1ca5f205fa5',
+          repo: 'HermesWu.github.io',
+          owner: 'HermesWu',
+          admin: ['HermesWu'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
   
 
