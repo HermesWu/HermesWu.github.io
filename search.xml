@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Tween.js]]></title>
+    <title><![CDATA[各个封装个简单的jQuery]]></title>
     <url>%2F2018%2F05%2F22%2FjQuery%2F%E5%90%84%E4%B8%AA%E5%B0%81%E8%A3%85%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84jQuery%2F</url>
     <content type="text"><![CDATA[自己封装一个jQuery下面的代码，封装了一个简单的jQuery API。some 知识点： jQuery接受一个选择器或者一个节点 类名可以是一个类名字符串，或者是一个类名数组。 text方法，允许参数为空，当参数为空时，默认取值。当参数不为空时，默认设置值。 代码如下：123456789101112131415161718192021222324252627282930313233343536373839404142434445window.jQuery = function(nodeOrSelector) &#123; var nodes = &#123;&#125; if(typeof nodeOrSelector === &apos;string&apos;) &#123; var temp = document.querySelectorAll(nodeOrSelector) for(let i = 0; i &lt; temp.length; i++) &#123; nodes[i] = temp[i] &#125; nodes.length = temp.length &#125;else&#123; nodes = &#123; 0: nodeOrSelector, length: 1 &#125; &#125; nodes.addClass = function(classes) &#123; if(typeof classes === &apos;string&apos;)&#123; for(let i = 0; i &lt; nodes.length; i++) &#123; nodes[i].classList.add(value) &#125; &#125;else if (Array.isArray(classes))&#123; classes.forEach((value) =&gt; &#123; for(let i = 0; i &lt; nodes.length; i++) &#123; nodes[i].classList.add(value) &#125; &#125;) &#125; &#125; nodes.text = function(text) &#123; if(text === undefined) &#123; var texts = [] for(let i = 0; i &lt; nodes.length; i++) &#123; texts.push(nodes[i].textContent) &#125; return texts; &#125;else &#123; for(let i = 0; i &lt; nodes.length; i++) &#123; nodes[i].textContent = text &#125; &#125; &#125; return nodes;&#125;var temp = document.querySelectorAll(&apos;li&apos;)jQuery(temp[]).addClass([&apos;red&apos;]) (完)]]></content>
       <categories>
